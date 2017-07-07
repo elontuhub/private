@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{background: #123456;}
+        .pic_wall{width: 980px;height: 500px;}
+        .center{position: absolute;left: 0;top: 0;right: 0;bottom: 0;margin: auto;}
+        .item{width: 196px;height: 100px;position: absolute;background-color: rgba(255,256,255,1);transition: transform 1.5s;}
+        .item>.pic{width: 100%;height: 100%;transition: transform 1.5s;}
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var picWall = $('#pic_wall');
+            var isShowAll = true;
+            //初始化函数
+            function init(){
+//       插入
+                for(var i=0;i<25;i++){
+                    // 获取横纵参数值
+                    var x = i%5;
+                    var y = parseInt(i/5);
+                    var pos = parseInt(Math.random()*40-30)+'deg';
+                    $('<div class="item"><div class="pic"></div></div>')
+                    .css({
+                        'left': x*196,
+                        'top': y*100
+                    }).appendTo(picWall);
+                }
+            }
+//    展示图片
+            function show(){
+                $('.item .pic').each(function(i){
+                    // 获取横纵参数值
+                    var x = i%5;
+                    var y = parseInt(i/5);
+                    //  获取随机偏移度数
+                    var deg = parseInt(Math.random()*30-20);
+                    $(this).css({
+                        'background-image': 'url(images/'+(i+1)+'.jpg)',
+                        'background-size': 'cover',
+                        'transform': 'scale(0.95,0.9)'
+                    }).parent().css({
+                        'transform': 'rotate('+deg+'deg) translate('+(x-2)*50+'px,'+(y-2)*50+'px)'
+                    });
+
+                })
+            }
+//    展示单张图片
+            function showItem(index){
+                $('.pic').each(function(i){
+                    var x = i%5;
+                    var y = parseInt(i/5);
+                    $(this).css({
+                        'background-image': 'url(images/'+(index+1)+'.jpg)',
+                        'background-position':  ''+x*(-196)+'px '+y*(-100)+'px',
+                        'background-size': 'auto',
+                        'transform': 'scale(1,1)'
+                    }).parent().css({
+                        'transform': 'rotate(0deg) translate(0,0)'
+                    });
+                });
+            }
+
+//1.初始化
+    init();
+//    2.展示所有图片
+    show();
+//    3.展示单张图片
+    $('.item').click(function(){
+        if(isShowAll){
+            showItem($(this).index());
+        }else{
+            show();
+        }
+        isShowAll = !isShowAll;
+    })
+        })
+    </script>
+</head>
+<body>
+<div id="pic_wall" class="pic_wall center"></div>
+
+</body>
+</html>

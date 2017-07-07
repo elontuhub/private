@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>8-照片墙1</title>
+<style>
+
+.pic{overflow: hidden;width:980px; height:500px; position:absolute; left:0; top:0;right:0; bottom:0; margin:auto; background-color:gray;}
+.item{ width:196px; height:100px; background-image:url(images/11.jpg); position:absolute; transition:all 3s; }
+
+</style>
+
+<script src="js/jquery.min.js"></script>
+
+<script>
+
+$(function(){
+
+	var pic=$(".pic");
+
+	for(var i=0;i<25;i++){
+
+		var x = i%5;
+
+		var y=parseInt(i/5)
+
+		$("<div class='item'></div>")
+		.css({
+			"background-position":x*(-196)+"px "+y*(-100)+"px",
+			"left":x*196+"px",
+			"top":y*100+"px"
+			})
+
+		.appendTo(pic);
+
+	}
+
+	var items=$(".item");
+
+
+	var bol=false;  //状态变量
+
+	$(".pic").click(function(){
+
+		  //items.delay(1000).animate({"opacity":0.2},1000);
+
+		  if(bol){
+			  show();
+		  }else{
+			  hide();
+		  }
+
+		  bol=!bol;
+
+
+	});
+
+	// 递归函数 -- 限制条件  24
+	function show(){
+
+	     items.each(function(index, element) {
+
+             var x=index%5;
+			 var y=parseInt(index/5);
+
+			 $(this).css({
+			    left:x*196+"px",
+				top:y*100+"px",
+				opacity:1
+			 });
+         });
+
+	}
+
+    function hide(){
+
+	    items.each(function(index, element) {
+
+			 var x=Math.random()*6000-3000; // [-3000,3000)
+			 var y=Math.random()*6000-1000;
+
+			 $(this).css({
+
+			        left:x+"px",
+				    top:y+"px",
+					opacity:0
+
+			 })
+
+        });
+
+
+
+
+	}
+
+
+})
+
+</script>
+</head>
+
+<body>
+
+<div class="pic">
+
+
+</div>
+
+</body>
+</html>
